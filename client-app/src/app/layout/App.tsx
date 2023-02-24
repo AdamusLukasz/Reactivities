@@ -3,6 +3,7 @@ import axios from 'axios';
 import { Header } from 'semantic-ui-react';
 import List from 'semantic-ui-react/dist/commonjs/elements/List';
 import { Activity } from '../models/activity';
+import NavBar from './navbar';
 
 function App() {
 const [activities, setActivities] = useState<Activity[]>([]);
@@ -16,7 +17,7 @@ useEffect(() => {
 
   return (
     <div>
-      <Header as='h2' icon='users' content='Reactivities' />
+      <NavBar />
       <List>
         {activities.map((activity) => (
           <List.Item key={activity.id}>
