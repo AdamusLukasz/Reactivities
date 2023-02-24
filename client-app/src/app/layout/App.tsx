@@ -4,6 +4,7 @@ import { Container, Header } from 'semantic-ui-react';
 import List from 'semantic-ui-react/dist/commonjs/elements/List';
 import { Activity } from '../models/activity';
 import NavBar from './navbar';
+import ActivityDashboard from '../../features/activities/dashboard/ActivityDashboard';
 
 function App() {
   const [activities, setActivities] = useState<Activity[]>([]);
@@ -18,14 +19,8 @@ function App() {
   return (
     <Fragment>
       <NavBar />
-      <Container style={{marginTop: '7em'}}>
-        <List>
-          {activities.map((activity) => (
-            <List.Item key={activity.id}>
-              {activity.title}
-            </List.Item>
-          ))}
-        </List>
+      <Container style={{ marginTop: '7em' }}>
+        <ActivityDashboard activities={activities} />
       </Container>
     </Fragment>
   );
