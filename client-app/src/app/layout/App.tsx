@@ -4,6 +4,7 @@ import { Container } from 'semantic-ui-react';
 import { Activity } from '../models/activity';
 import NavBar from './navbar';
 import ActivityDashboard from '../../features/activities/dashboard/ActivityDashboard';
+import React from 'react';
 
 function App() {
   const [activities, setActivities] = useState<Activity[]>([]);
@@ -25,31 +26,40 @@ function App() {
     setSelectedActivity(undefined);
   }
 
-function handleFormOpen(id?: string) {
-  id ? handleSelectActivity(id) : handleCancelSelectetActivity();
-  setEditMode(true);
-}
+  function handleFormOpen(id?: string) {
+    id ? handleSelectActivity(id) : handleCancelSelectetActivity();
+    setEditMode(true);
+  }
 
-function handleFormClose() {
-  setEditMode(false);
-}
+  function handleFormClose() {
+    setEditMode(false);
+  }
 
-  return (
-    <Fragment>
-      <NavBar openForm={handleFormOpen}/>
-      <Container style={{ marginTop: '7em' }}>
-        <ActivityDashboard 
-        activities={activities} 
-        selectedActivity={selectedActivity}
-        selectActivity={handleSelectActivity}
-        cancelSelectActivity={handleCancelSelectetActivity}
-        editMode={editMode}
-        openForm={handleFormOpen}
-        closeForm={handleFormClose}
-        />
-      </Container>
-    </Fragment>
-  );
-}
+  function handleCreateOrEditActivity(activity: Activity) {
+    activity.id ?
+      setActivities([...activities.filter(x => x.id !== activity.id), activity])
+      : setActivities([...activities, activity])
+    setEditMode(false)
+    setSelectedActivity(activity);
+  }
+    return (
+      <Fragment>
+        <NavBar openForm={handleFormOpen} />
+        <Container style={{ marginTop: '7em' }}>
+          <ActivityDashboard
+            activities={activities}
+            selectedActivity={selectedActivity}
+            selectActivity={handleSelectActivity}
+            cancelSelectActivity={handleCancelSelectetActivity}
+            editMode={editMode}
+            openForm={handleFormOpen}
+            closeForm={handleFormClose}
+            createOrEdit={handleCreateOrEditActivity}
+          />
+        </Container>
+      </Fragment>
+    );
+  }
+
 
 export default App;
